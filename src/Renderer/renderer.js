@@ -26,5 +26,6 @@ function formatClipboard() {
       break;
   }
 
+  clipboard.clear();
   clipboard.writeText(output);
 }
