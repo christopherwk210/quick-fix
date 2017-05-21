@@ -1,8 +1,9 @@
-const { electron, globalShortcut, app, BrowserWindow } = require('electron');
+const { electron, globalShortcut, app, BrowserWindow, Tray } = require('electron');
 
 const path = require('path');
 const url = require('url');
 
+let tray;
 let mainWindow;
 
 function createWindow () {
