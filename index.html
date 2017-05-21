@@ -13,7 +13,7 @@
       const lang = require('language-classifier');
 
       function readClip() {
-        console.log(lang(clipboard.readText()));
+        console.log(beautify_js.js_beautify(clipboard.readText()));
       }
     </script>
   </body>
