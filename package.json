@@ -1,0 +1,19 @@
+{
+  "name": "quick-fix",
+  "version": "0.0.0",
+  "description": "An tiny app for quickly formatting code in your clipboard.",
+  "main": "index.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/christopherwk210/quick-fix.git"
+  },
+  "author": "Chris Anselmo <christopherwk210@gmail.com> (http://chrisanselmo.com/)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/christopherwk210/quick-fix/issues"
+  },
+  "homepage": "https://github.com/christopherwk210/quick-fix#readme"
+}
