@@ -2,7 +2,7 @@
   "name": "quick-fix",
   "version": "0.0.0",
   "description": "An tiny app for quickly formatting code in your clipboard.",
-  "main": "index.js",
+  "main": "./src/Main/index.js",
   "scripts": {
     "start": "electron ."
   },
