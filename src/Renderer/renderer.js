@@ -3,7 +3,7 @@ const beautify_js = require('js-beautify');
 const lang = require('language-classifier');
 
 ipcRenderer.on('shortcut-hit', (event, arg) => {
-  console.log(arg);
+  formatClipboard();
 })
 
 function formatClipboard() {
