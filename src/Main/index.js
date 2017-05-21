@@ -1,4 +1,5 @@
 const { electron, globalShortcut, app, BrowserWindow, Tray } = require('electron');
+const settings = require('electron-settings');
 
 const path = require('path');
 const url = require('url');
@@ -22,8 +23,13 @@ function createWindow () {
   });
 }
 
+function handleSettings() {
+  let all_settings = settings.getAll();
+}
+
 app.on('ready', () => {
   createWindow();
+  handleSettings();
 
   const ret = globalShortcut.register('CommandOrControl+B', () => {
     mainWindow.webContents.send('shortcut-hit', 'ping');
