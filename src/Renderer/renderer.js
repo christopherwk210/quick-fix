@@ -11,6 +11,8 @@ function formatClipboard() {
       language = lang(clipboard_contents),
       output = '';
 
+  if (clipboard_contents.length === 0) return;
+
   switch(language) {
     case 'css':
       output = beautify_js.css(clipboard_contents);
@@ -24,5 +26,5 @@ function formatClipboard() {
       break;
   }
 
-  console.log(output);
+  clipboard.writeText(output);
 }
