@@ -1,4 +1,4 @@
-const { electron, globalShortcut, app, BrowserWindow, Tray } = require('electron');
+const { electron, globalShortcut, app, BrowserWindow, Tray, Menu } = require('electron');
 const settings = require('electron-settings');
 
 const path = require('path');
@@ -27,9 +27,29 @@ function handleSettings() {
   let all_settings = settings.getAll();
 }
 
+function setupTray() {
+  if (process.platform !== 'darwin') {
+    tray = new Tray(path.join(__dirname, '../images/win_icon.ico'));
+  } else {
+    tray = new Tray(path.join(__dirname, '../images/tray_icon_gray.png'));
+    tray.setPressedImage(path.join(__dirname, '../images/tray_icon_color.png'));
+  }
+  tray.setToolTip('QuickFix');
+
+  let contextMenu = Menu.buildFromTemplate([
+    {label: 'Preferences...', type: 'normal'},
+    {label: 'About QuickFix', type: 'normal'},    
+    {type: 'separator'},
+    {label: 'Quit', type: 'normal', role: 'quit'}
+  ])
+
+  tray.setContextMenu(contextMenu)
+}
+
 app.on('ready', () => {
   createWindow();
   handleSettings();
+  setupTray();
 
   const ret = globalShortcut.register('CommandOrControl+B', () => {
     mainWindow.webContents.send('shortcut-hit', 'ping');
