@@ -7,14 +7,6 @@
   <body>
     <button onclick="readClip()">Show Clipboard</button>
 
-    <script>
-      const { clipboard } = require('electron');
-      const beautify_js = require('js-beautify');
-      const lang = require('language-classifier');
-
-      function readClip() {
-        console.log(beautify_js.js_beautify(clipboard.readText()));
-      }
-    </script>
+    <script src="./Renderer/renderer.js"></script>
   </body>
 </html>
