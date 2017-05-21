@@ -5,6 +5,14 @@
     <title>QuickFix</title>
   </head>
   <body>
-    <button>Show Clipboard</button>
+    <button onclick="readClip()">Show Clipboard</button>
+
+    <script>
+      const { clipboard } = require('electron');
+
+      function readClip() {
+        console.log(clipboard.readText());
+      }
+    </script>
   </body>
 </html>
