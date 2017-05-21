@@ -9,9 +9,11 @@
 
     <script>
       const { clipboard } = require('electron');
+      const beautify_js = require('js-beautify');
+      const lang = require('language-classifier');
 
       function readClip() {
-        console.log(clipboard.readText());
+        console.log(lang(clipboard.readText()));
       }
     </script>
   </body>
