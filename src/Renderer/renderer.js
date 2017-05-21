@@ -1,6 +1,10 @@
-const { clipboard } = require('electron');
+const { clipboard, ipcRenderer } = require('electron');
 const beautify_js = require('js-beautify');
 const lang = require('language-classifier');
+
+ipcRenderer.on('shortcut-hit', (event, arg) => {
+  console.log(arg);
+})
 
 function formatClipboard() {
   let clipboard_contents = clipboard.readText(),

@@ -1,6 +1,4 @@
-const electron = require('electron');
-const app = electron.app;
-const BrowserWindow = electron.BrowserWindow;
+const { electron, globalShortcut, app, BrowserWindow } = require('electron');
 
 const path = require('path');
 const url = require('url');
@@ -23,7 +21,13 @@ function createWindow () {
   });
 }
 
-app.on('ready', createWindow);
+app.on('ready', () => {
+  createWindow();
+
+  const ret = globalShortcut.register('CommandOrControl+B', () => {
+    mainWindow.webContents.send('shortcut-hit', 'ping');
+  });
+});
 
 app.on('window-all-closed', function () {
   if (process.platform !== 'darwin') {
