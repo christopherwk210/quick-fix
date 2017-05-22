@@ -33,6 +33,12 @@ function formatClipboard() {
       break;
   }
 
+  new Notification('QuickFix', {
+    title: 'QuickFix',
+    body: 'Clipboard formatted!',
+    silent: true
+  });
+
   clipboard.clear();
   clipboard.writeText(output);
 }
