@@ -37,3 +37,15 @@ h1:first-child {
   display: flex;
   flex-direction: column;
 }
+
+p {
+  margin: 4px 0;
+}
+
+p:first-child {
+  margin-top: 0;
+}
+
+p:last-child {
+  margin-bottom: 0;
+}
