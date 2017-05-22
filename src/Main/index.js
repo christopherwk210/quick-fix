@@ -7,15 +7,17 @@ let tray;
 let mainWindow;
 
 function createWindow () {
-  mainWindow = new BrowserWindow({width: 800, height: 600});
+  mainWindow = new BrowserWindow({
+    width: 800,
+    height: 600,
+    show: false
+  });
 
   mainWindow.loadURL(url.format({
     pathname: path.join(__dirname, '../index.html'),
     protocol: 'file:',
     slashes: true
   }));
-
-  mainWindow.webContents.openDevTools();
 
   mainWindow.on('closed', function () {
     mainWindow = null;
@@ -57,9 +59,10 @@ function setupTray() {
 }
 
 /**
- * Set up our application with user settings, a tray icon, and global shortcuts
+ * Set up our application
  */
 app.on('ready', () => {
+  createWindow();
   handleSettings();
   setupTray();
 
@@ -67,3 +70,10 @@ app.on('ready', () => {
     mainWindow.webContents.send('shortcut-hit', 'ping');
   });
 });
+
+/**
+ * Prevent app from closing when all windows are closed
+ */
+app.on('window-all-closed', () => {
+  //😎
+})
