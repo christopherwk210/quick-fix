@@ -3,8 +3,7 @@ const settings = require('electron-settings');
 const path = require('path');
 const url = require('url');
 
-let tray;
-let mainWindow;
+let mainWindow, aboutWindow, tray;
 
 /**
  * Create the main settings window
@@ -35,7 +34,27 @@ function handleSettings() {
 }
 
 function handleAboutWindow() {
-  
+  if (!aboutWindow) {
+    aboutWindow = new BrowserWindow({
+      width: 200,
+      height: 200,
+      resizable: false,
+      minimizable: false,
+      maximizable: false,
+      skipTaskbar: true,
+      title: ''
+    });
+
+    aboutWindow.loadURL(url.format({
+      pathname: path.join(__dirname, '../renderer/views/about.html'),
+      protocol: 'file:',
+      slashes: true
+    }));
+
+    aboutWindow.on('closed', () => {
+      about = null;
+    });
+  }
 }
 
 /**
