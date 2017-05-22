@@ -47,23 +47,10 @@ function setupTray() {
 }
 
 app.on('ready', () => {
-  createWindow();
   handleSettings();
   setupTray();
 
   const ret = globalShortcut.register('CommandOrControl+B', () => {
     mainWindow.webContents.send('shortcut-hit', 'ping');
   });
-});
-
-app.on('window-all-closed', function () {
-  if (process.platform !== 'darwin') {
-    app.quit();
-  }
-});
-
-app.on('activate', function () {
-  if (mainWindow === null) {
-    createWindow();
-  }
 });
