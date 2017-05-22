@@ -13,5 +13,16 @@
     <p>Created by <a href="http://chrisanselmo.com">Chris Anselmo</a></p>
     <p>Icon art: <a href="https://twitter.com/i_am_thirteen">@i_am_thirteen</a></p>
     <p>Source code on <a href="https://github.com/christopherwk210/quick-fix">GitHub</a></p>
+
+    <script>
+      const { shell } = require('electron');
+      let links = document.querySelectorAll('a');
+      links.forEach(link => {
+        link.addEventListener('click', e => {
+          e.preventDefault();
+          shell.openExternal(event.target.href);
+        });
+      });
+    </script>
   </body>
 </html>
