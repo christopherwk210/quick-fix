@@ -6,6 +6,9 @@ const url = require('url');
 let tray;
 let mainWindow;
 
+/**
+ * Create the main settings window
+ */
 function createWindow () {
   mainWindow = new BrowserWindow({
     width: 800,
@@ -22,10 +25,6 @@ function createWindow () {
     protocol: 'file:',
     slashes: true
   }));
-
-  mainWindow.on('closed', function () {
-    mainWindow = null;
-  });
 }
 
 /**
@@ -33,6 +32,10 @@ function createWindow () {
  */
 function handleSettings() {
   let all_settings = settings.getAll();
+}
+
+function handleAboutWindow() {
+  
 }
 
 /**
@@ -53,7 +56,7 @@ function setupTray() {
   //Create the context menu
   let contextMenu = Menu.buildFromTemplate([
     {label: 'Preferences...', type: 'normal'},
-    {label: 'About QuickFix', type: 'normal'},    
+    {label: 'About QuickFix', type: 'normal', click: handleAboutWindow},    
     {type: 'separator'},
     {label: 'Quit', type: 'normal', role: 'quit'}
   ])
