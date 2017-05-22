@@ -33,6 +33,9 @@ function handleSettings() {
   let all_settings = settings.getAll();
 }
 
+/**
+ * Create and show the about window
+ */
 function handleAboutWindow() {
   if (!aboutWindow) {
     aboutWindow = new BrowserWindow({
@@ -42,7 +45,8 @@ function handleAboutWindow() {
       minimizable: false,
       maximizable: false,
       skipTaskbar: true,
-      title: ''
+      title: '',
+      show: false
     });
 
     aboutWindow.loadURL(url.format({
@@ -51,8 +55,12 @@ function handleAboutWindow() {
       slashes: true
     }));
 
+    aboutWindow.once('ready-to-show', () => {
+      aboutWindow.show();
+    });
+
     aboutWindow.on('closed', () => {
-      about = null;
+      aboutWindow = null;
     });
   }
 }
