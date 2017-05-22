@@ -1,6 +1,5 @@
 const { electron, globalShortcut, app, BrowserWindow, Tray, Menu } = require('electron');
 const settings = require('electron-settings');
-
 const path = require('path');
 const url = require('url');
 
@@ -23,19 +22,29 @@ function createWindow () {
   });
 }
 
+/**
+ * Initial load/set up of user settings
+ */
 function handleSettings() {
   let all_settings = settings.getAll();
 }
 
+/**
+ * Sets up the tray icon and it's context menu
+ */
 function setupTray() {
+  //Use the approapriate icon per OS
   if (process.platform !== 'darwin') {
     tray = new Tray(path.join(__dirname, '../images/win_icon.ico'));
   } else {
     tray = new Tray(path.join(__dirname, '../images/tray_icon_gray.png'));
     tray.setPressedImage(path.join(__dirname, '../images/tray_icon_color.png'));
   }
+
+  //A nice tooltip
   tray.setToolTip('QuickFix');
 
+  //Create the context menu
   let contextMenu = Menu.buildFromTemplate([
     {label: 'Preferences...', type: 'normal'},
     {label: 'About QuickFix', type: 'normal'},    
@@ -43,9 +52,13 @@ function setupTray() {
     {label: 'Quit', type: 'normal', role: 'quit'}
   ])
 
+  //Apply the menu
   tray.setContextMenu(contextMenu)
 }
 
+/**
+ * Set up our application with user settings, a tray icon, and global shortcuts
+ */
 app.on('ready', () => {
   handleSettings();
   setupTray();
