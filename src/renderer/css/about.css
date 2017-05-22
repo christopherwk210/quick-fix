@@ -20,6 +20,7 @@ body {
 
 body > img {
   align-self: center;
+  pointer-events: none;
 }
 
 h2, h3 {
