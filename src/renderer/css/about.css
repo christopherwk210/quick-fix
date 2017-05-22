@@ -1,0 +1,19 @@
+* {
+  user-select: none;
+}
+
+html, body {
+  margin: 0;
+  height: 100%;
+}
+
+body {
+  padding-top: 16px;
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+}
+
+body > img {
+  align-self: center;
+}
