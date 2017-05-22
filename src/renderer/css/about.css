@@ -2,6 +2,7 @@
   -webkit-user-select: none;
   user-select: none;
   text-align: center;
+  cursor: default;
 }
 
 html, body {
@@ -33,6 +34,7 @@ p {
 
 a {
   text-decoration: none;
+  cursor: pointer;
 }
 
 a:hover {

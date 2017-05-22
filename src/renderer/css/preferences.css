@@ -1,0 +1,25 @@
+* {
+  -webkit-user-select: none;
+  user-select: none;
+  cursor: default;
+}
+
+html, body {
+  margin: 0;
+  height: 100%;
+  font-family: sans-serif;
+}
+
+body {
+  background-color: #E7D5D1;
+}
+
+h1 {
+   background-color: #E05850;
+   color: white;
+   padding-left: 16px;
+}
+
+h1:first-child {
+  margin-top: 0;
+}
