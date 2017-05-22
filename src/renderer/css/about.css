@@ -1,10 +1,12 @@
 * {
   user-select: none;
+  text-align: center;
 }
 
 html, body {
   margin: 0;
   height: 100%;
+  font-family: sans-serif;
 }
 
 body {
@@ -12,8 +14,25 @@ body {
   display: flex;
   flex-direction: column;
   align-content: center;
+  background-color: #E7D5D1;
 }
 
 body > img {
   align-self: center;
+}
+
+h2, h3 {
+  margin-bottom: 4px;
+}
+
+p {
+  margin: 4px;
+}
+
+a {
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
 }

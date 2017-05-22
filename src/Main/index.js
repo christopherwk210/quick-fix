@@ -40,7 +40,7 @@ function handleAboutWindow() {
   if (!aboutWindow) {
     aboutWindow = new BrowserWindow({
       width: 300,
-      height: 300,
+      height: 400,
       resizable: false,
       minimizable: false,
       maximizable: false,
