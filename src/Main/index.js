@@ -10,7 +10,11 @@ function createWindow () {
   mainWindow = new BrowserWindow({
     width: 800,
     height: 600,
-    show: false
+    show: false,
+    resizable: false,
+    minimizable: false,
+    maximizable: false,
+    skipTaskbar: true
   });
 
   mainWindow.loadURL(url.format({
@@ -55,7 +59,7 @@ function setupTray() {
   ])
 
   //Apply the menu
-  tray.setContextMenu(contextMenu)
+  tray.setContextMenu(contextMenu);
 }
 
 /**
@@ -69,6 +73,10 @@ app.on('ready', () => {
   const ret = globalShortcut.register('CommandOrControl+B', () => {
     mainWindow.webContents.send('shortcut-hit', 'ping');
   });
+
+  if (process.platform === 'darwin') {
+    app.dock.hide();
+  }
 });
 
 /**
