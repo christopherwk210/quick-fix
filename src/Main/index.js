@@ -3,7 +3,7 @@ const settings = require('electron-settings');
 const path = require('path');
 const url = require('url');
 
-let mainWindow, aboutWindow, tray;
+let mainWindow, aboutWindow, tray, forceQuit = false;
 
 /**
  * Create the main settings window
@@ -24,6 +24,13 @@ function createWindow () {
     protocol: 'file:',
     slashes: true
   }));
+
+  mainWindow.on('close', e => {
+    if (!forceQuit) {
+      e.preventDefault();
+      mainWindow.hide();
+    }
+  });
 }
 
 /**
@@ -68,6 +75,13 @@ function handleAboutWindow() {
 }
 
 /**
+ * Show the preferences window
+ */
+function handlePreferencesWindow() {
+  mainWindow.show();
+}
+
+/**
  * Sets up the tray icon and it's context menu
  */
 function setupTray() {
@@ -84,10 +98,13 @@ function setupTray() {
 
   //Create the context menu
   let contextMenu = Menu.buildFromTemplate([
-    {label: 'Preferences...', type: 'normal'},
+    {label: 'Preferences...', type: 'normal', click: handlePreferencesWindow},
     {label: 'About QuickFix', type: 'normal', click: handleAboutWindow},    
     {type: 'separator'},
-    {label: 'Quit', type: 'normal', role: 'quit'}
+    {label: 'Quit', type: 'normal', click: () => {
+      forceQuit = true;
+      app.quit();
+    }}
   ])
 
   //Apply the menu
@@ -116,4 +133,4 @@ app.on('ready', () => {
  */
 app.on('window-all-closed', () => {
   //😎
-})
+});
