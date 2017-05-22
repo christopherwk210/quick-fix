@@ -62,6 +62,8 @@ function handleAboutWindow() {
     aboutWindow.on('closed', () => {
       aboutWindow = null;
     });
+  } else {
+    aboutWindow.focus();
   }
 }
 
