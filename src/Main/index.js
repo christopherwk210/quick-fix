@@ -101,11 +101,8 @@ function setupTray() {
     {label: 'Preferences...', type: 'normal', click: handlePreferencesWindow},
     {label: 'About QuickFix', type: 'normal', click: handleAboutWindow},    
     {type: 'separator'},
-    {label: 'Quit', type: 'normal', click: () => {
-      forceQuit = true;
-      app.quit();
-    }}
-  ])
+    {label: 'Quit', type: 'normal', role: 'quit'}
+  ]);
 
   //Apply the menu
   tray.setContextMenu(contextMenu);
@@ -126,6 +123,13 @@ app.on('ready', () => {
   if (process.platform === 'darwin') {
     app.dock.hide();
   }
+});
+
+/**
+ * Use force to remove the preferences window
+ */
+app.on('before-quit', () => {
+  forceQuit = true;
 });
 
 /**
