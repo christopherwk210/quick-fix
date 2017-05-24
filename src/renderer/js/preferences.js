@@ -4,6 +4,15 @@ const lang = require('language-classifier');
 const path = require('path');
 const Moon = require("moonjs");
 
+window.onload = () => {
+  window.moonApp = new Moon({
+    el: '#app',
+    data: {
+
+    }
+  });
+};
+
 //Listen for global shortcut hits from the main process
 ipcRenderer.on('shortcut-hit', (event, arg) => {
   formatClipboard();
