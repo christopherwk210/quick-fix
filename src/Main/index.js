@@ -10,7 +10,7 @@ let mainWindow, aboutWindow, tray, forceQuit = false;
  */
 function createWindow () {
   mainWindow = new BrowserWindow({
-    width: 800,
+    width: 600,
     height: 600,
     show: false,
     resizable: false,
