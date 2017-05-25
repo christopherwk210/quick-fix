@@ -87,10 +87,10 @@ function handlePreferencesWindow() {
 function setupTray() {
   //Use the approapriate icon per OS
   if (process.platform !== 'darwin') {
-    tray = new Tray(path.join(__dirname, '../images/win_icon.ico'));
+    tray = new Tray(path.join(__dirname, '../static/win_icon.ico'));
   } else {
-    tray = new Tray(path.join(__dirname, '../images/tray_icon_gray.png'));
-    tray.setPressedImage(path.join(__dirname, '../images/tray_icon_color.png'));
+    tray = new Tray(path.join(__dirname, '../static/tray_icon_gray.png'));
+    tray.setPressedImage(path.join(__dirname, '../static/tray_icon_color.png'));
   }
 
   //A nice tooltip
