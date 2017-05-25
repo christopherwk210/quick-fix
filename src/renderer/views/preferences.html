@@ -103,7 +103,28 @@
       </div>
       <h1>CSS</h1>
       <div class="container">
-        test
+        <p>Indent size: <input m-model="js_beautify.css.indent_size" type="number"></p>
+        <p>Indent character: <input m-model="js_beautify.css.indent_char" type="text" maxlength="1"></p>
+        <p>
+          <label class="checkbox-label">
+            <input m-model="js_beautify.css.indent_with_tabs" type="checkbox"> Indent with tabs
+          </label>
+        </p>
+        <p>
+          <label class="checkbox-label">
+            <input m-model="js_beautify.css.end_with_newline" type="checkbox"> End with newline
+          </label>
+        </p>
+        <p>
+          <label class="checkbox-label">
+            <input m-model="js_beautify.css.selector_separator_newline" type="checkbox"> Selector separator newline
+          </label>
+        </p>
+        <p>
+          <label class="checkbox-label">
+            <input m-model="js_beautify.css.newline_between_rules" type="checkbox"> Newline between rules
+          </label>
+        </p>
       </div>
       <h1>HTML</h1>
       <div class="container">
