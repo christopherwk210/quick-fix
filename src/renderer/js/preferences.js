@@ -2,13 +2,18 @@ const { clipboard, ipcRenderer } = require('electron');
 const beautify_js = require('js-beautify');
 const lang = require('language-classifier');
 const path = require('path');
-const Moon = require("moonjs");
+const Moon = require('moonjs');
+const defaultJsBeautify = require('../../static/defaults.json');
 
 window.onload = () => {
   window.moonApp = new Moon({
     el: '#app',
     data: {
-
+      js_beautify: defaultJsBeautify.settings,
+      settings: {
+        show_notification: true,
+        keyboard_shortcut: ""
+      }
     }
   });
 };
