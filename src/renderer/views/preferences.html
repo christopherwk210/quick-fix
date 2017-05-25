@@ -57,7 +57,15 @@
             <input m-model="js_beautify.js.space_after_anon_function" type="checkbox"> Space after anonymous function
           </label>
         </p>
-        <p>Brace style: <input type="number"></p>
+        <p>
+          Brace style: 
+          <select m-model="js_beautify.js.brace_style">
+            <option value="none">none</option>
+            <option value="end-expand">end-expand</option>
+            <option value="expand">expand</option>
+            <option value="collapse">collapse</option>
+          </select>
+        </p>
         <p>
           <label class="checkbox-label">
             <input m-model="js_beautify.js.break_chained_methods" type="checkbox"> Break chained methods
@@ -84,7 +92,14 @@
             <input m-model="js_beautify.js.comma_first" type="checkbox"> Comma first
           </label>
         </p>
-        <p>Operator position: <input type="number"></p>
+        <p>
+          Operator position:
+          <select m-model="js_beautify.js.operator_position">
+            <option value="preserve-newline">preserve newline</option>
+            <option value="after-newline">after newline</option>
+            <option value="before-newline">before newline</option>
+          </select>
+        </p>
       </div>
       <h1>CSS</h1>
       <div class="container">
