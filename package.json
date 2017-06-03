@@ -19,7 +19,6 @@
   "dependencies": {
     "electron-settings": "^3.0.14",
     "js-beautify": "^1.6.14",
-    "language-classifier": "0.0.1",
-    "moonjs": "^0.10.0"
+    "language-classifier": "0.0.1"
   }
 }
