@@ -1,6 +1,7 @@
 const { clipboard, ipcRenderer } = require('electron');
 const beautify_js = require('js-beautify');
 const lang = require('language-classifier');
+const path = require('path');
 
 //Listen for global shortcut hits from the main process
 ipcRenderer.on('shortcut-hit', (event, arg) => {
