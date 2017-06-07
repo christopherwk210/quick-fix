@@ -60,7 +60,7 @@ function handleSettings() {
 function handleAboutWindow() {
   if (!aboutWindow) {
     aboutWindow = new BrowserWindow({
-      width: 300,
+      width: 250,
       height: 400,
       resizable: false,
       minimizable: false,
