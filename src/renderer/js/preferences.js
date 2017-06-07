@@ -1,4 +1,5 @@
-const { clipboard, ipcRenderer } = require('electron');
+const { clipboard, ipcRenderer, shell } = require('electron');
+const { app } = require('electron').remote;
 const beautify_js = require('js-beautify');
 const lang = require('language-classifier');
 const path = require('path');
@@ -7,6 +8,16 @@ const path = require('path');
 ipcRenderer.on('shortcut-hit', (event, arg) => {
   formatClipboard();
 })
+
+/**
+ * Opens finder showing the settings file
+ */
+function showSettings() {
+  //Get app data path
+  let userDataPath = app.getPath('userData');
+
+  shell.showItemInFolder(path.join(userDataPath, 'jsbeautifyrc.json'));
+}
 
 /**
  * Reads the clipboard contents, beautifies it, then overwrites the clipboard

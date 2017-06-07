@@ -31,6 +31,8 @@ function createWindow () {
     skipTaskbar: true
   });
 
+  mainWindow.webContents.openDevTools();
+
   mainWindow.loadURL(url.format({
     pathname: path.join(__dirname, '../renderer/views/preferences.html'),
     protocol: 'file:',
@@ -140,6 +142,14 @@ function loadSettings() {
           fs.createReadStream(path.join(__dirname, '../static/jsbeautifyrc.json')).pipe(fs.createWriteStream(path.join(userDataPath, 'jsbeautifyrc.json')));
         } else {
           //If it does, read the settings that are there
+          beautifyOptions = JSON.parse(
+            stripJsonComments(
+              fs.readFileSync(
+                path.join(userDataPath, 'jsbeautifyrc.json'),
+                'utf8'
+              )
+            )
+          );
         }
       });
     }
