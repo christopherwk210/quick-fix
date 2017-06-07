@@ -1,9 +1,21 @@
-const { electron, globalShortcut, app, BrowserWindow, Tray, Menu } = require('electron');
+const { electron, globalShortcut, app, BrowserWindow, Tray, Menu, shell } = require('electron');
 const settings = require('electron-settings');
 const path = require('path');
 const url = require('url');
+const fs = require('fs');
+const stripJsonComments = require('strip-json-comments');
 
 let mainWindow, aboutWindow, tray, forceQuit = false;
+
+//Load the default JSBeautify settings
+let beautifyOptions = JSON.parse(
+  stripJsonComments(
+    fs.readFileSync(
+      path.join(__dirname, '../static/jsbeautifyrc.json'),
+      'utf8'
+    )
+  )
+);
 
 /**
  * Create the main settings window
@@ -109,9 +121,36 @@ function setupTray() {
 }
 
 /**
+ * Loads settings from flat file storage
+ */
+function loadSettings() {
+  //Get app data path
+  let userDataPath = app.getPath('userData');
+
+  //Check if the folder exists
+  fs.exists(userDataPath, exists => {
+    //If it doesn't, create it and put the default options there
+    if (!exists) {
+      fs.createReadStream(path.join(__dirname, '../static/jsbeautifyrc.json')).pipe(fs.createWriteStream(path.join(userDataPath, 'jsbeautifyrc.json')));
+    } else {
+      //If the folder exists, check if the settings file exists
+      fs.exists(path.join(userDataPath, 'jsbeautifyrc.json'), fileExists => {
+        if (!fileExists) {
+          //If it doesn't, put the default there
+          fs.createReadStream(path.join(__dirname, '../static/jsbeautifyrc.json')).pipe(fs.createWriteStream(path.join(userDataPath, 'jsbeautifyrc.json')));
+        } else {
+          //If it does, read the settings that are there
+        }
+      });
+    }
+  });
+}
+
+/**
  * Set up our application
  */
 app.on('ready', () => {
+  loadSettings();
   createWindow();
   handleSettings();
   setupTray();
