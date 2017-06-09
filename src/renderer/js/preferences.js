@@ -3,6 +3,7 @@ const { app } = require('electron').remote;
 const beautify_js = require('js-beautify');
 const lang = require('language-classifier');
 const path = require('path');
+const fs = require('fs');
 const Switchery = require('switchery-npm');
 
 //Listen for global shortcut hits from the main process
@@ -16,8 +17,13 @@ ipcRenderer.on('shortcut-hit', (event, arg) => {
 function showSettings() {
   //Get app data path
   let userDataPath = app.getPath('userData');
-
-  shell.showItemInFolder(path.join(userDataPath, 'jsbeautifyrc.json'));
+  fs.exists(path.join(userDataPath, 'jsbeautifyrc.json'), exists => {
+    if (exists) {
+      shell.showItemInFolder(path.join(userDataPath, 'jsbeautifyrc.json'));
+    } else {
+      //Reset
+    }
+  });
 }
 
 /**
