@@ -152,14 +152,18 @@ function loadSettings() {
           fs.createReadStream(path.join(__dirname, '../static/jsbeautifyrc.json')).pipe(fs.createWriteStream(path.join(userDataPath, 'jsbeautifyrc.json')));
         } else {
           //If it does, read the settings that are there
-          beautifyOptions = JSON.parse(
-            stripJsonComments(
-              fs.readFileSync(
-                path.join(userDataPath, 'jsbeautifyrc.json'),
-                'utf8'
+          try {
+            beautifyOptions = JSON.parse(
+              stripJsonComments(
+                fs.readFileSync(
+                  path.join(userDataPath, 'jsbeautifyrc.json'),
+                  'utf8'
+                )
               )
-            )
-          );
+            );
+          } catch(e) {
+            console.log(e);
+          }
         }
       });
     }
@@ -181,7 +185,12 @@ function ipcSetup() {
       cancelId: 1,
       buttons: ['Yes', 'Cancel']
     }, res => {
-      console.log(res);
+      if (res === 0) {
+        let userDataPath = app.getPath('userData');
+        fs.unlink(path.join(userDataPath, 'jsbeautifyrc.json'), () => {
+          fs.createReadStream(path.join(__dirname, '../static/jsbeautifyrc.json')).pipe(fs.createWriteStream(path.join(userDataPath, 'jsbeautifyrc.json')));
+        });
+      }
     });
   });
 }
