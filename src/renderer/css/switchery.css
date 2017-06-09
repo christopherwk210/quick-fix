@@ -5,6 +5,8 @@
  *
  */
 
+/* Switchery defaults. */
+
 .switchery {
   background-color: #fff;
   border: 1px solid #dfdfdf;
@@ -15,15 +17,52 @@
   position: relative;
   vertical-align: middle;
   width: 50px;
+
+  -moz-user-select: none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  box-sizing: content-box;
+  background-clip: content-box;
 }
 
 .switchery > small {
   background: #fff;
-  cursor: pointer;
   border-radius: 100%;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
   height: 30px;
   position: absolute;
   top: 0;
   width: 30px;
+  cursor: pointer;
 }
+
+/* Switchery sizes. */
+
+.switchery-small {
+  border-radius: 20px;
+  height: 20px;
+  width: 33px;
+  cursor: pointer;
+}
+
+.switchery-small > small {
+  height: 20px;
+  width: 20px;
+  cursor: pointer;
+}
+
+.switchery-large {
+  border-radius: 40px;
+  height: 40px;
+  width: 66px;
+  cursor: pointer;
+}
+
+.switchery-large > small {
+  height: 40px;
+  width: 40px;
+  cursor: pointer;
+}
+
