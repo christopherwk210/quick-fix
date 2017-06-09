@@ -68,7 +68,7 @@ document.addEventListener("DOMContentLoaded", function() {
   elems.forEach( elem => {
     var switchery = new Switchery(elem, {
       color: '#E2635B',
-      speed: '0.2s'
+      speed: '0.3s'
     });
   });
 });

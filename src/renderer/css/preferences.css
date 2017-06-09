@@ -49,3 +49,48 @@ p:first-child {
 p:last-child {
   margin-bottom: 0;
 }
+
+button {
+  color: #E05850;
+  font-size: inherit;
+  background-color: transparent;
+  outline: none;
+  border: 2px solid #E05850;
+  border-radius: 4px;
+  cursor: pointer;
+  padding: 0.5em;
+}
+
+button:hover {
+  background-color: #E05850;
+  color: white;
+}
+
+button:hover:active {
+  background-color: #B45558;
+  border-color: #B45558;
+}
+
+.button-group {
+  display: inline-flex;
+}
+
+.button-group > button:not(:first-child):not(:last-child) {
+  margin-left: 0;
+  margin-right: 0;
+  border-left: none;
+  border-right: none;
+  border-radius: 0;
+}
+
+.button-group > button:first-child {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  margin-right: 0;
+}
+
+.button-group > button:last-child {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  margin-left: 0;
+}
