@@ -174,6 +174,7 @@ function ipcSetup() {
   ipcMain.addListener('reset-settings', () => {
     dialog.showMessageBox(mainWindow, {
       title: 'Warning',
+      icon: path.join(__dirname, '../static/original_icon.png'),
       message: 'Are you sure you want to reset your settings to default?',
       type: 'warning',
       defaultId: 1,
