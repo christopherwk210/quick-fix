@@ -11,7 +11,7 @@ html, body {
 }
 
 body {
-  background-color: #E7D5D1;
+  background-color: #F4E0DC;
 }
 
 h1 {
@@ -22,10 +22,7 @@ h1 {
    padding-left: 16px;
    padding-top: 4px;
    padding-bottom: 4px;
-}
-
-h1:first-child {
-  margin-top: 0;
+   margin:0;
 }
 
 .checkbox-label, .checkbox-label input {
@@ -33,9 +30,27 @@ h1:first-child {
 }
 
 .container {
-  padding: 0 16px;
+  /*padding: 0 16px;*/
   display: flex;
   flex-direction: column;
+}
+
+.container > p {
+  display: flex;
+  align-items: center;
+  height: 40px;
+  margin: 0;
+  padding: 1em;
+}
+
+.container > p:not(:first-child) {
+  border-top: 1px solid rgba(230, 114, 105, 0.4);
+}
+
+.container > p > *:first-child {
+  flex:1;
+  display:inline-flex;
+  align-items: center;
 }
 
 p {
