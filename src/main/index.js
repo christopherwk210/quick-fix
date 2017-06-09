@@ -1,4 +1,14 @@
-const { electron, globalShortcut, app, BrowserWindow, Tray, Menu, shell } = require('electron');
+const {
+  electron,
+  globalShortcut,
+  app,
+  BrowserWindow,
+  Tray,
+  Menu,
+  shell,
+  ipcMain,
+  dialog
+} = require('electron');
 const settings = require('electron-settings');
 const path = require('path');
 const url = require('url');
@@ -157,6 +167,25 @@ function loadSettings() {
 }
 
 /**
+ * Sets up ipcMain callbacks
+ */
+function ipcSetup() {
+  //Settings reset
+  ipcMain.addListener('reset-settings', () => {
+    dialog.showMessageBox(mainWindow, {
+      title: 'Warning',
+      message: 'Are you sure you want to reset your settings to default?',
+      type: 'warning',
+      defaultId: 1,
+      cancelId: 1,
+      buttons: ['Yes', 'Cancel']
+    }, res => {
+      console.log(res);
+    });
+  });
+}
+
+/**
  * Set up our application
  */
 app.on('ready', () => {
@@ -164,6 +193,7 @@ app.on('ready', () => {
   createWindow();
   handleSettings();
   setupTray();
+  ipcSetup();
 
   const ret = globalShortcut.register('CommandOrControl+B', () => {
     mainWindow.webContents.send('shortcut-hit', 'ping');

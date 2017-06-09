@@ -1,4 +1,4 @@
-const { clipboard, ipcRenderer, shell } = require('electron');
+const { clipboard, ipcRenderer, shell, dialog } = require('electron');
 const { app } = require('electron').remote;
 const beautify_js = require('js-beautify');
 const lang = require('language-classifier');
@@ -17,6 +17,13 @@ function showSettings() {
   let userDataPath = app.getPath('userData');
 
   shell.showItemInFolder(path.join(userDataPath, 'jsbeautifyrc.json'));
+}
+
+/**
+ * Sends the reset settings message to main process
+ */
+function resetSettings() {
+  ipcRenderer.send('reset-settings', true);
 }
 
 /**
