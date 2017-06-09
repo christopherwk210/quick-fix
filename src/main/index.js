@@ -16,6 +16,7 @@ const fs = require('fs');
 const stripJsonComments = require('strip-json-comments');
 
 let mainWindow, aboutWindow, tray, forceQuit = false;
+let userDataPath = app.getPath('userData');
 
 //Load the default JSBeautify settings
 let beautifyOptions = JSON.parse(
@@ -133,12 +134,36 @@ function setupTray() {
 }
 
 /**
+ * Attempts to load the beautify options from the file.
+ * If it fails, the default options are returned.
+ * @return {object} Beautify options object
+ */
+function readBeautifyOptions() {
+  try {
+    return JSON.parse(
+      stripJsonComments(
+        fs.readFileSync(
+          path.join(userDataPath, 'jsbeautifyrc.json'),
+          'utf8'
+        )
+      )
+    );
+  } catch(e) {
+    return JSON.parse(
+      stripJsonComments(
+        fs.readFileSync(
+          path.join(__dirname, '../static/jsbeautifyrc.json'),
+          'utf8'
+        )
+      )
+    );
+  }
+}
+
+/**
  * Loads settings from flat file storage
  */
 function loadSettings() {
-  //Get app data path
-  let userDataPath = app.getPath('userData');
-
   //Check if the folder exists
   fs.exists(userDataPath, exists => {
     //If it doesn't, create it and put the default options there
@@ -152,18 +177,7 @@ function loadSettings() {
           fs.createReadStream(path.join(__dirname, '../static/jsbeautifyrc.json')).pipe(fs.createWriteStream(path.join(userDataPath, 'jsbeautifyrc.json')));
         } else {
           //If it does, read the settings that are there
-          try {
-            beautifyOptions = JSON.parse(
-              stripJsonComments(
-                fs.readFileSync(
-                  path.join(userDataPath, 'jsbeautifyrc.json'),
-                  'utf8'
-                )
-              )
-            );
-          } catch(e) {
-            console.log(e);
-          }
+          beautifyOptions = readBeautifyOptions();
         }
       });
     }
@@ -186,10 +200,19 @@ function ipcSetup() {
       buttons: ['Yes', 'Cancel']
     }, res => {
       if (res === 0) {
-        let userDataPath = app.getPath('userData');
         fs.unlink(path.join(userDataPath, 'jsbeautifyrc.json'), () => {
           fs.createReadStream(path.join(__dirname, '../static/jsbeautifyrc.json')).pipe(fs.createWriteStream(path.join(userDataPath, 'jsbeautifyrc.json')));
         });
+
+        //Load default options
+        beautifyOptions = JSON.parse(
+          stripJsonComments(
+            fs.readFileSync(
+              path.join(__dirname, '../static/jsbeautifyrc.json'),
+              'utf8'
+            )
+          )
+        );
       }
     });
   });
