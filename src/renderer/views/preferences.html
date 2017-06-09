@@ -4,16 +4,13 @@
     <meta charset="UTF-8">
     <title>QuickFix</title>
     <link rel='stylesheet' href='../css/preferences.css'>
+    <link rel='stylesheet' href='../css/switchery.css'>
   </head>
   <body>
     <div id="app">
       <h1>General</h1>
       <div class="container">
-        <p>
-          <label class="checkbox-label">
-            <input m-model="settings.show_notification" type="checkbox"> Show notifications
-          </label>
-        </p>
+        <p>Show notifications <input class="js-switch" type="checkbox"></p>
         <p>Format clipboard shortcut: <button>Change...</button></p>
         <p>Beautify settings: <button onclick="showSettings()">Open file location</button><button>Reload</button><button onclick="resetSettings()">Reset</button></p>
       </div>
@@ -23,11 +20,7 @@
       </div>-->
       <h1>CSS</h1>
       <div class="container">
-        <p>
-          <label class="checkbox-label">
-            <input m-model="settings.show_notification" type="checkbox"> Auto-prefix
-          </label>
-        </p>
+        <p>Auto-prefix <input class="js-switch" type="checkbox"></p>
       </div>
       <!--<h1>HTML</h1>
       <div class="container">

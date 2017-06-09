@@ -3,6 +3,7 @@ const { app } = require('electron').remote;
 const beautify_js = require('js-beautify');
 const lang = require('language-classifier');
 const path = require('path');
+const Switchery = require('switchery');
 
 //Listen for global shortcut hits from the main process
 ipcRenderer.on('shortcut-hit', (event, arg) => {
@@ -60,3 +61,13 @@ function formatClipboard() {
   clipboard.clear();
   clipboard.writeText(output);
 }
+
+document.addEventListener("DOMContentLoaded", function() {
+  //Add fancy switches 💅
+  var elems = Array.prototype.slice.call(document.querySelectorAll('.js-switch'));
+  elems.forEach( elem => {
+    var switchery = new Switchery(elem, {
+      color: '#E2635B'
+    });
+  });
+});
