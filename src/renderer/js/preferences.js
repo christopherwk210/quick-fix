@@ -11,6 +11,15 @@ ipcRenderer.on('shortcut-hit', (event, arg) => {
   formatClipboard();
 })
 
+//Listen for notification triggers from main process
+ipcRenderer.on('show-notification', (event, arg) => {
+  new Notification('QuickFix', {
+    title: arg.title,
+    body: arg.body,
+    silent: true
+  });
+});
+
 /**
  * Opens finder showing the settings file
  */

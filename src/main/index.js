@@ -189,7 +189,7 @@ function loadSettings() {
  */
 function ipcSetup() {
   //Settings reset
-  ipcMain.on('reset-settings', () => {
+  ipcMain.on('reset-settings', (event, args) => {
     dialog.showMessageBox(mainWindow, {
       title: 'Warning',
       icon: path.join(__dirname, '../static/original_icon.png'),
@@ -213,19 +213,32 @@ function ipcSetup() {
             )
           )
         );
+
+        event.sender.send('show-notification', {
+          title: 'QuickFix',
+          body: 'Settings successfully reset to default.'
+        });
       }
     });
   });
 
   //Cant find settings file
-  ipcMain.on('cant-find-settings-file', () => {
+  ipcMain.on('cant-find-settings-file', (event, args) => {
+    event.sender.send('show-notification', {
+      title: 'QuickFix',
+      body: 'Warning: Couldn\'t find settings file. Default settings created.'
+    });
     fs.createReadStream(path.join(__dirname, '../static/jsbeautifyrc.json')).pipe(fs.createWriteStream(path.join(userDataPath, 'jsbeautifyrc.json')));
     shell.showItemInFolder(path.join(userDataPath, 'jsbeautifyrc.json'));
   });
 
   //Reload settings
-  ipcMain.on('reload-settings', () => {
+  ipcMain.on('reload-settings', (event, args) => {
     beautifyOptions = readBeautifyOptions();
+    event.sender.send('show-notification', {
+      title: 'QuickFix',
+      body: 'Settings reloaded!'
+    });
   });
 }
 
