@@ -17,6 +17,8 @@ const stripJsonComments = require('strip-json-comments');
 
 let mainWindow, aboutWindow, tray, forceQuit = false;
 let userDataPath = app.getPath('userData');
+let showNotifications = settings.get('showNotifications', false);
+let autoPrefix = settings.get('autoPrefix', false);
 
 //Load the default JSBeautify settings
 let beautifyOptions = JSON.parse(
@@ -58,19 +60,10 @@ function createWindow () {
   });
 
   mainWindow.webContents.once('did-finish-load', () => {
-    mainWindow.webContents.send('change-notification', true);    
+    mainWindow.webContents.send('change-notification', showNotifications);
+    mainWindow.webContents.send('change-autoprefix', autoPrefix);
+    mainWindow.webContents.send('change-beautify', beautifyOptions);
   });
-
-  mainWindow.webContents.once('did-finish-load', () => {
-    mainWindow.webContents.send('change-autoprefix', true);
-  });
-}
-
-/**
- * Initial load/set up of user settings
- */
-function handleSettings() {
-  let all_settings = settings.getAll();
 }
 
 /**
@@ -243,6 +236,7 @@ function ipcSetup() {
   //Reload settings
   ipcMain.on('reload-settings', (event, args) => {
     beautifyOptions = readBeautifyOptions();
+    mainWindow.webContents.send('change-beautify', beautifyOptions);
     event.sender.send('show-notification', {
       title: 'QuickFix',
       body: 'Settings reloaded!'
@@ -251,11 +245,13 @@ function ipcSetup() {
 
   //Notification setting toggle
   ipcMain.on('show-notification-change', (event, args) => {
-
+    settings.set('showNotifications', args);
+    showNotifications = args;
   });
 
   ipcMain.on('auto-prefix-change', (event, args) => {
-
+    settings.set('autoPrefix', args);
+    autoPrefix = args;
   });
 }
 
@@ -265,7 +261,6 @@ function ipcSetup() {
 app.on('ready', () => {
   loadSettings();
   createWindow();
-  handleSettings();
   setupTray();
   ipcSetup();
 

@@ -7,6 +7,21 @@ const fs = require('fs');
 const Switchery = require('switchery-npm');
 let showNotifications = false;
 let autoPrefix = false;
+const stripJsonComments = require('strip-json-comments');
+let beautifyOptions = JSON.parse(
+  stripJsonComments(
+    fs.readFileSync(
+      path.join(__dirname, '../../static/jsbeautifyrc.json'),
+      'utf8'
+    )
+  )
+);
+
+//Listen for beautify option changes
+ipcRenderer.on('change-beautify', (event, arg) => {
+  beautifyOptions = arg;
+  console.log(beautifyOptions);
+});
 
 //Listen for showNotification changes
 ipcRenderer.on('change-notification', (event, arg) => {
@@ -39,11 +54,12 @@ ipcRenderer.on('show-notification', (event, arg) => {
 });
 
 function showNotificationChange(element) {
-  showNotifications = element;
+  showNotifications = element.checked;
   ipcRenderer.send('show-notification-change', element.checked);
 }
 
 function autoPrefixChange(element) {
+  autoPrefix = element.checked;
   ipcRenderer.send('auto-prefix-change', element.checked);
 }
 
