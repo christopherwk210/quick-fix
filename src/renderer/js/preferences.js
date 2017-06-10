@@ -27,6 +27,13 @@ function showSettings() {
 }
 
 /**
+ * Sends the reload settings message to the main process
+ */
+function reloadSettings() {
+  ipcRenderer.send('reload-settings', true);
+}
+
+/**
  * Sends the reset settings message to main process
  */
 function resetSettings() {

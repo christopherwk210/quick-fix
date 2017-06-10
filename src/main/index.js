@@ -222,6 +222,11 @@ function ipcSetup() {
     fs.createReadStream(path.join(__dirname, '../static/jsbeautifyrc.json')).pipe(fs.createWriteStream(path.join(userDataPath, 'jsbeautifyrc.json')));
     shell.showItemInFolder(path.join(userDataPath, 'jsbeautifyrc.json'));
   });
+
+  //Reload settings
+  ipcMain.addListener('reload-settings', () => {
+    beautifyOptions = readBeautifyOptions();
+  });
 }
 
 /**
