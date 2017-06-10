@@ -20,7 +20,6 @@ let beautifyOptions = JSON.parse(
 //Listen for beautify option changes
 ipcRenderer.on('change-beautify', (event, arg) => {
   beautifyOptions = arg;
-  console.log(beautifyOptions);
 });
 
 //Listen for showNotification changes
@@ -106,14 +105,14 @@ function formatClipboard() {
 
   switch(language) {
     case 'css':
-      output = beautify_js.css(clipboard_contents);
+      output = beautify_js.css(clipboard_contents, beautifyOptions.css);
       break;
     case 'html':
-      output = beautify_js.html(clipboard_contents);
+      output = beautify_js.html(clipboard_contents, beautifyOptions.html);
       break;
     case 'javascript':
     default:
-      output = beautify_js.js_beautify(clipboard_contents);
+      output = beautify_js.js_beautify(clipboard_contents, beautifyOptions.js);
       break;
   }
 
