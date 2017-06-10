@@ -189,7 +189,7 @@ function loadSettings() {
  */
 function ipcSetup() {
   //Settings reset
-  ipcMain.addListener('reset-settings', () => {
+  ipcMain.on('reset-settings', () => {
     dialog.showMessageBox(mainWindow, {
       title: 'Warning',
       icon: path.join(__dirname, '../static/original_icon.png'),
@@ -218,13 +218,13 @@ function ipcSetup() {
   });
 
   //Cant find settings file
-  ipcMain.addListener('cant-find-settings-file', () => {
+  ipcMain.on('cant-find-settings-file', () => {
     fs.createReadStream(path.join(__dirname, '../static/jsbeautifyrc.json')).pipe(fs.createWriteStream(path.join(userDataPath, 'jsbeautifyrc.json')));
     shell.showItemInFolder(path.join(userDataPath, 'jsbeautifyrc.json'));
   });
 
   //Reload settings
-  ipcMain.addListener('reload-settings', () => {
+  ipcMain.on('reload-settings', () => {
     beautifyOptions = readBeautifyOptions();
   });
 }
