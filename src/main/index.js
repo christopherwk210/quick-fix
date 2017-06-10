@@ -240,6 +240,15 @@ function ipcSetup() {
       body: 'Settings reloaded!'
     });
   });
+
+  //Notification setting toggle
+  ipcMain.on('show-notification-change', (event, args) => {
+
+  });
+
+  ipcMain.on('auto-prefix-change', (event, args) => {
+
+  });
 }
 
 /**

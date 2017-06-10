@@ -20,6 +20,14 @@ ipcRenderer.on('show-notification', (event, arg) => {
   });
 });
 
+function showNotificationChange(element) {
+  ipcRenderer.send('show-notification-change', element.checked);
+}
+
+function autoPrefixChange(element) {
+  ipcRenderer.send('auto-prefix-change', element.checked);
+}
+
 /**
  * Opens finder showing the settings file
  */
