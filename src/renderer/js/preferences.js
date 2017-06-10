@@ -21,7 +21,7 @@ function showSettings() {
     if (exists) {
       shell.showItemInFolder(path.join(userDataPath, 'jsbeautifyrc.json'));
     } else {
-      //Reset
+      ipcRenderer.send('cant-find-settings-file', true);
     }
   });
 }
@@ -74,6 +74,7 @@ document.addEventListener("DOMContentLoaded", function() {
   elems.forEach( elem => {
     var switchery = new Switchery(elem, {
       color: '#E2635B',
+      secondaryColor: 'rgba(255, 255, 255, 0.9)',
       speed: '0.3s'
     });
   });

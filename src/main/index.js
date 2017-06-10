@@ -216,6 +216,12 @@ function ipcSetup() {
       }
     });
   });
+
+  //Cant find settings file
+  ipcMain.addListener('cant-find-settings-file', () => {
+    fs.createReadStream(path.join(__dirname, '../static/jsbeautifyrc.json')).pipe(fs.createWriteStream(path.join(userDataPath, 'jsbeautifyrc.json')));
+    shell.showItemInFolder(path.join(userDataPath, 'jsbeautifyrc.json'));
+  });
 }
 
 /**
