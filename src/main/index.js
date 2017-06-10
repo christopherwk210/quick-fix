@@ -56,6 +56,14 @@ function createWindow () {
       mainWindow.hide();
     }
   });
+
+  mainWindow.webContents.once('did-finish-load', () => {
+    mainWindow.webContents.send('change-notification', true);    
+  });
+
+  mainWindow.webContents.once('did-finish-load', () => {
+    mainWindow.webContents.send('change-autoprefix', true);
+  });
 }
 
 /**

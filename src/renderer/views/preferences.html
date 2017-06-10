@@ -10,7 +10,7 @@
     <div id="app">
       <h1>General</h1>
       <div class="container">
-        <p><span>Show notification on trigger</span> <input onchange="showNotificationChange(this)" class="js-switch" type="checkbox"></p>
+        <p><span>Show notification on trigger</span> <input onchange="showNotificationChange(this)" id="notificationSwitch" class="js-switch" type="checkbox"></p>
         <p><span>Format clipboard shortcut</span> <button>Change...</button></p>
         <p>
           <span>Beautify settings</span>
@@ -27,7 +27,7 @@
       </div>-->
       <h1>CSS</h1>
       <div class="container">
-        <p><span>Auto-prefix</span> <input onchange="autoPrefixChange(this)" class="js-switch" type="checkbox"></p>
+        <p><span>Auto-prefix</span> <input id="autoprefixSwitch" onchange="autoPrefixChange(this)" class="js-switch" type="checkbox"></p>
       </div>
       <!--<h1>HTML</h1>
       <div class="container">

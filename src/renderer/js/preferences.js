@@ -5,6 +5,24 @@ const lang = require('language-classifier');
 const path = require('path');
 const fs = require('fs');
 const Switchery = require('switchery-npm');
+let showNotifications = false;
+let autoPrefix = false;
+
+//Listen for showNotification changes
+ipcRenderer.on('change-notification', (event, arg) => {
+  showNotifications = arg;
+  if (arg) {
+    document.getElementById('notificationSwitch').click();
+  }
+});
+
+//Listen for autoPrefix changes
+ipcRenderer.on('change-autoprefix', (event, arg) => {
+  autoPrefix = arg;
+  if (arg) {
+    document.getElementById('autoprefixSwitch').click();
+  }
+});
 
 //Listen for global shortcut hits from the main process
 ipcRenderer.on('shortcut-hit', (event, arg) => {
@@ -21,6 +39,7 @@ ipcRenderer.on('show-notification', (event, arg) => {
 });
 
 function showNotificationChange(element) {
+  showNotifications = element;
   ipcRenderer.send('show-notification-change', element.checked);
 }
 
@@ -82,11 +101,13 @@ function formatClipboard() {
       break;
   }
 
-  new Notification('QuickFix', {
-    title: 'QuickFix',
-    body: 'Clipboard formatted!',
-    silent: true
-  });
+  if (showNotifications) {
+    new Notification('QuickFix', {
+      title: 'QuickFix',
+      body: 'Clipboard formatted!',
+      silent: true
+    });
+  }
 
   clipboard.clear();
   clipboard.writeText(output);
