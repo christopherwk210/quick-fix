@@ -127,13 +127,14 @@ function formatClipboard() {
 
   switch(language) {
     case 'css':
-      output = beautify_js.css(clipboard_contents, beautifyOptions.css);
-      if (autoPrefix) {
+      if (!autoPrefix) {
+        output = beautify_js.css(clipboard_contents, beautifyOptions.css);
+      } else {
         postcss([ autoPrefixer ]).process(output).then(function (result) {
           result.warnings().forEach(function (warn) {
             console.warn(warn.toString());
           });
-          writeClipboard(result.css, showNotifications);
+          writeClipboard(beautify_js.css(result.css, beautifyOptions.css), showNotifications);
         });
         return;
       }
