@@ -15,6 +15,9 @@ const url = require('url');
 const fs = require('fs');
 const stripJsonComments = require('strip-json-comments');
 
+//Thank you https://github.com/sindresorhus/electron-is-dev!
+const isDev = process.defaultApp || /[\\/]electron-prebuilt[\\/]/.test(process.execPath) || /[\\/]electron[\\/]/.test(process.execPath);
+
 let mainWindow, aboutWindow, tray, forceQuit = false;
 let userDataPath = app.getPath('userData');
 let showNotifications = settings.get('showNotifications', false);
@@ -44,7 +47,9 @@ function createWindow () {
     skipTaskbar: true
   });
 
-  mainWindow.webContents.openDevTools();
+  if (isDev) {
+    mainWindow.webContents.openDevTools();
+  }
 
   mainWindow.loadURL(url.format({
     pathname: path.join(__dirname, '../renderer/views/preferences.html'),
@@ -215,6 +220,7 @@ function ipcSetup() {
           )
         );
 
+        //Notify the user about it
         event.sender.send('show-notification', {
           title: 'QuickFix',
           body: 'Settings successfully reset to default.'
@@ -225,12 +231,17 @@ function ipcSetup() {
 
   //Cant find settings file
   ipcMain.on('cant-find-settings-file', (event, args) => {
+    //Copy the default first
+    fs.createReadStream(path.join(__dirname, '../static/jsbeautifyrc.json')).pipe(fs.createWriteStream(path.join(userDataPath, 'jsbeautifyrc.json')));
+
+    //Show it!
+    shell.showItemInFolder(path.join(userDataPath, 'jsbeautifyrc.json'));
+
+    //Notify our user
     event.sender.send('show-notification', {
       title: 'QuickFix',
       body: 'Warning: Couldn\'t find settings file. Default settings created.'
     });
-    fs.createReadStream(path.join(__dirname, '../static/jsbeautifyrc.json')).pipe(fs.createWriteStream(path.join(userDataPath, 'jsbeautifyrc.json')));
-    shell.showItemInFolder(path.join(userDataPath, 'jsbeautifyrc.json'));
   });
 
   //Reload settings
