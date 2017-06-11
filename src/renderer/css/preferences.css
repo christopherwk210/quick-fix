@@ -15,14 +15,14 @@ body {
 }
 
 h1 {
-   background-color: #E05850;
-   background: linear-gradient(to right, #E05850, #E7776D);
-   box-shadow: inset 0 2px 0 #C94F48;
-   color: white;
-   padding-left: 16px;
-   padding-top: 4px;
-   padding-bottom: 4px;
-   margin:0;
+  background-color: #E05850;
+  background: linear-gradient(to right, #E05850, #E7776D);
+  box-shadow: inset 0 2px 0 #C94F48;
+  color: white;
+  padding-left: 16px;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  margin:0;
 }
 
 .checkbox-label, .checkbox-label input {

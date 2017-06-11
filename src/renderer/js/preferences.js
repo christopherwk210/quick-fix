@@ -5,9 +5,12 @@ const lang = require('language-classifier');
 const path = require('path');
 const fs = require('fs');
 const Switchery = require('switchery-npm');
+const stripJsonComments = require('strip-json-comments');
+const autoPrefixer = require('autoprefixer');
+const postcss = require('postcss');
+
 let showNotifications = false;
 let autoPrefix = false;
-const stripJsonComments = require('strip-json-comments');
 let beautifyOptions = JSON.parse(
   stripJsonComments(
     fs.readFileSync(
@@ -92,6 +95,25 @@ function resetSettings() {
 }
 
 /**
+ * Clears & writes new content to the clipboard along with
+ * an optional success notification.
+ * @param {string} contents Contents to write to the clipboard
+ * @param {boolean} notify Toggle showing a notification
+ */
+function writeClipboard(contents, notify) {
+  if (notify) {
+    new Notification('QuickFix', {
+      title: 'QuickFix',
+      body: 'Clipboard formatted!',
+      silent: true
+    });
+  }
+
+  clipboard.clear();
+  clipboard.writeText(contents);
+}
+
+/**
  * Reads the clipboard contents, beautifies it, then overwrites the clipboard
  * with the output.
  */
@@ -106,6 +128,15 @@ function formatClipboard() {
   switch(language) {
     case 'css':
       output = beautify_js.css(clipboard_contents, beautifyOptions.css);
+      if (autoPrefix) {
+        postcss([ autoPrefixer ]).process(output).then(function (result) {
+          result.warnings().forEach(function (warn) {
+            console.warn(warn.toString());
+          });
+          writeClipboard(result.css, showNotifications);
+        });
+        return;
+      }
       break;
     case 'html':
       output = beautify_js.html(clipboard_contents, beautifyOptions.html);
@@ -116,16 +147,7 @@ function formatClipboard() {
       break;
   }
 
-  if (showNotifications) {
-    new Notification('QuickFix', {
-      title: 'QuickFix',
-      body: 'Clipboard formatted!',
-      silent: true
-    });
-  }
-
-  clipboard.clear();
-  clipboard.writeText(output);
+  writeClipboard(output, showNotifications);
 }
 
 document.addEventListener("DOMContentLoaded", function() {
