@@ -1,3 +1,4 @@
+//Electron stuffs
 const {
   electron,
   globalShortcut,
@@ -7,19 +8,24 @@ const {
   Menu,
   shell,
   ipcMain,
-  dialog
-} = require('electron');
-const settings = require('electron-settings');
-const path = require('path');
-const url = require('url');
-const fs = require('fs');
-const stripJsonComments = require('strip-json-comments');
+  dialog } = require('electron');
+
+//Node
+const path = require('path'),
+      url = require('url'),
+      fs = require('fs');
+
+//Third party
+const settings = require('electron-settings'),
+      stripJsonComments = require('strip-json-comments');
 
 //Thank you https://github.com/sindresorhus/electron-is-dev!
 const isDev = process.defaultApp || /[\\/]electron-prebuilt[\\/]/.test(process.execPath) || /[\\/]electron[\\/]/.test(process.execPath);
 
 let mainWindow, aboutWindow, tray, forceQuit = false;
 let userDataPath = app.getPath('userData');
+
+//Load user settings
 let showNotifications = settings.get('showNotifications', false);
 let autoPrefix = settings.get('autoPrefix', false);
 
@@ -64,6 +70,7 @@ function createWindow () {
     }
   });
 
+  //Pass along our initial values
   mainWindow.webContents.once('did-finish-load', () => {
     mainWindow.webContents.send('change-notification', showNotifications);
     mainWindow.webContents.send('change-autoprefix', autoPrefix);
@@ -260,6 +267,7 @@ function ipcSetup() {
     showNotifications = args;
   });
 
+  //Auto prefix setting toggle
   ipcMain.on('auto-prefix-change', (event, args) => {
     settings.set('autoPrefix', args);
     autoPrefix = args;
@@ -279,6 +287,7 @@ app.on('ready', () => {
     mainWindow.webContents.send('shortcut-hit', 'ping');
   });
 
+  //Don't show our app in the dock
   if (process.platform === 'darwin') {
     app.dock.hide();
   }
