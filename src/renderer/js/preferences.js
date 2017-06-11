@@ -1,16 +1,24 @@
+//Electroooooon
 const { clipboard, ipcRenderer, shell, dialog } = require('electron');
 const { app } = require('electron').remote;
-const beautify_js = require('js-beautify');
-const lang = require('language-classifier');
-const path = require('path');
-const fs = require('fs');
-const Switchery = require('switchery-npm');
-const stripJsonComments = require('strip-json-comments');
-const autoPrefixer = require('autoprefixer');
-const postcss = require('postcss');
 
+//Third party
+const beautify_js = require('js-beautify'),
+      lang = require('language-classifier'),
+      Switchery = require('switchery-npm'),
+      stripJsonComments = require('strip-json-comments'),
+      autoPrefixer = require('autoprefixer'),
+      postcss = require('postcss');
+
+//Node
+const path = require('path'),
+      fs = require('fs');
+
+//Default user settings
 let showNotifications = false;
 let autoPrefix = false;
+
+//Load default options
 let beautifyOptions = JSON.parse(
   stripJsonComments(
     fs.readFileSync(
@@ -55,11 +63,19 @@ ipcRenderer.on('show-notification', (event, arg) => {
   });
 });
 
+/**
+ * Send the updated setting for notification showing
+ * @param {*} element Checkbox element
+ */
 function showNotificationChange(element) {
   showNotifications = element.checked;
   ipcRenderer.send('show-notification-change', element.checked);
 }
 
+/**
+ * Send the updated setting for autoprefixing
+ * @param {*} element Checkbox element
+ */
 function autoPrefixChange(element) {
   autoPrefix = element.checked;
   ipcRenderer.send('auto-prefix-change', element.checked);
@@ -75,6 +91,7 @@ function showSettings() {
     if (exists) {
       shell.showItemInFolder(path.join(userDataPath, 'jsbeautifyrc.json'));
     } else {
+      //Have the main process copy the default file and show that instead
       ipcRenderer.send('cant-find-settings-file', true);
     }
   });
@@ -138,6 +155,8 @@ function formatClipboard() {
           //Then we beautify after
           writeClipboard(beautify_js.css(result.css, beautifyOptions.css), showNotifications);
         });
+
+        //Don't continue, since we will handle it in the postcss callback
         return;
       }
       break;
@@ -150,6 +169,7 @@ function formatClipboard() {
       break;
   }
 
+  //Write our output
   writeClipboard(output, showNotifications);
 }
 
