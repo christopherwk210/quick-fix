@@ -130,10 +130,12 @@ function formatClipboard() {
       if (!autoPrefix) {
         output = beautify_js.css(clipboard_contents, beautifyOptions.css);
       } else {
+        //Autoprefix first
         postcss([ autoPrefixer ]).process(output).then(function (result) {
           result.warnings().forEach(function (warn) {
             console.warn(warn.toString());
           });
+          //Then we beautify after
           writeClipboard(beautify_js.css(result.css, beautifyOptions.css), showNotifications);
         });
         return;
