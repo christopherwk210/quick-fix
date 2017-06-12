@@ -45,7 +45,7 @@ let beautifyOptions = JSON.parse(
 function createWindow () {
   mainWindow = new BrowserWindow({
     width: 600,
-    height: 600,
+    height: 500,
     show: false,
     resizable: false,
     minimizable: false,
