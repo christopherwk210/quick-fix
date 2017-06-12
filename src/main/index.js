@@ -1,6 +1,5 @@
 //Electron stuffs
 const {
-  electron,
   globalShortcut,
   app,
   BrowserWindow,

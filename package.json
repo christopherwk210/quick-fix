@@ -18,7 +18,8 @@
   "homepage": "https://github.com/christopherwk210/quick-fix#readme",
   "dependencies": {
     "autoprefixer": "^7.1.1",
-    "electron-settings": "^3.0.14",
+    "electron": "^1.7.3",
+    "electron-settings": "^3.1.1",
     "js-beautify": "^1.6.14",
     "language-classifier": "0.0.1",
     "postcss": "^6.0.1",
