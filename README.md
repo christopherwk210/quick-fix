@@ -1,9 +1,8 @@
-<center>
+<p align="center">
   <img src="./src/static/original_icon.png">
-
-## QuickFix
-An tiny app for quickly formatting code in your clipboard.
-</center>
+  <h3 align="center">QuickFix</h3>
+  <p align="center">An tiny app for quickly formatting code in your clipboard.<p>
+</p>
 
 # How does it work?
 
